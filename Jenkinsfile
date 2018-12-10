@@ -8,7 +8,8 @@ pipeline {
                 }
             }
             steps {
-                sh 'python -m py_compile sources/add2vals.py sources/calc.py'
+		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']){
+                sh 'python -m py_compile sources/add2vals.py sources/calc.py'}
             }
         }
         stage('Test') {
@@ -18,7 +19,9 @@ pipeline {
                 }
             }
             steps {
+withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']){
                 sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+}
             }
             post {
                 always {
@@ -32,9 +35,9 @@ pipeline {
                     image 'cdrx/pyinstaller-linux:python2' 
                 }
             }
-            steps {
+            steps {withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']){
                 sh 'pyinstaller --onefile sources/add2vals.py' 
-            }
+            }}
             post {
                 success {
                     archiveArtifacts 'dist/add2vals' 
