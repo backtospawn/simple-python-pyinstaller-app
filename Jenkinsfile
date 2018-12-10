@@ -8,9 +8,7 @@ pipeline {
                 }
             }
             steps {
-		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']){
                 shell 'python -m py_compile sources/add2vals.py sources/calc.py'}
-            }
         }
         stage('Test') {
             agent {
