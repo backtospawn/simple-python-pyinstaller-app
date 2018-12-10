@@ -9,7 +9,7 @@ pipeline {
             }
             steps {
 		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']){
-                bat 'python -m py_compile sources/add2vals.py sources/calc.py'}
+                shell 'python -m py_compile sources/add2vals.py sources/calc.py'}
             }
         }
         stage('Test') {
